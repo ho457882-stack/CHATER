@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fill Up Your Order</title>
+<style>
+body{background:#000;color:#fff;font-family:'Poppins',sans-serif;display:flex;flex-direction:column;align-items:center;padding:20px 10px;}
+h1{font-size:2em;color:#ff0033;text-shadow:0 0 10px #ff0033;margin-bottom:15px;text-align:center;}
+.input-box{width:100%;max-width:700px;margin-bottom:10px;display:flex;flex-direction:column;gap:8px;}
+input{padding:10px;border-radius:8px;border:none;font-size:1em;background:#111;color:#fff;width:100%;box-sizing:border-box;}
+textarea{width:100%;max-width:700px;height:200px;padding:10px;border-radius:8px;border:none;font-size:1em;margin-bottom:10px;background:#111;color:#fff;resize:none;box-sizing:border-box;}
+.button-group{display:flex;gap:10px;width:100%;max-width:700px;justify-content:center;margin-top:10px;}
+button{flex:1;padding:10px;font-size:1.1em;font-weight:700;color:#fff;background:#ff0033;border:none;border-radius:25px;cursor:pointer;box-shadow:0 0 10px #ff0033;transition:0.3s;}
+button:hover{background:#fff;color:#ff0033;}
+.success{background:green !important;color:#fff;}
+</style>
+</head>
+<body>
+
+<h1>Fill Up Your Order</h1>
+
+<div class="input-box">
+<input type="text" id="fullName" placeholder="Full Name">
+<input type="text" id="grade" placeholder="Grade">
+<input type="text" id="section" placeholder="Section">
+</div>
+
+<textarea id="livePreview" readonly placeholder="Order info will appear here..."></textarea>
+
+<div class="button-group">
+<button id="submitBtn">Submit Order</button>
+</div>
+
+<script>
+// BIN & Access key simulation
+const BIN_ID="$2a$10$8mJdZmmfpPtrE6iazZDGGubYMI9gXd0yhdhUGr3eXI90y6XnOzhmC";
+const ACCESS_KEY="$2a$10$8YaiU1c5n10XmOEYdj.YPO2msWu/Rk7bDyqSBtxd1sGb8gV8fmbLK";
+const MASTERY_KEY="68cb1b4dae596e708ff236fd";
+
+let orderData=JSON.parse(localStorage.getItem('shopOrders'))||{items:[],total:0};
+
+function updatePreview(){
+const fullName=document.getElementById('fullName').value.trim()||"N/A";
+const grade=document.getElementById('grade').value.trim()||"N/A";
+const section=document.getElementById('section').value.trim()||"N/A";
+
+let ordersText=orderData.items.length?orderData.items.map(o=>"- "+o).join("\n"):"No orders yet";
+
+document.getElementById('livePreview').value=
+`Full Name: ${fullName}\nGrade: ${grade}\nSection: ${section}\nOrders:\n${ordersText}\nTotal: ₱${orderData.total}`;
+}
+
+document.getElementById('fullName').addEventListener('input',updatePreview);
+document.getElementById('grade').addEventListener('input',updatePreview);
+document.getElementById('section').addEventListener('input',updatePreview);
+updatePreview();
+
+document.getElementById('submitBtn').addEventListener('click',()=>{
+const fullName=document.getElementById('fullName').value.trim();
+const grade=document.getElementById('grade').value.trim();
+const section=document.getElementById('section').value.trim();
+
+if(!fullName||!grade||!section||orderData.items.length===0){alert("Fill all fields and add orders first!");return;}
+
+// Save order in "admin storage"
+let adminOrders=JSON.parse(localStorage.getItem('adminOrders'))||[];
+adminOrders.push({
+bin:BIN_ID,
+access:ACCESS_KEY,
+mastery:MASTERY_KEY,
+timestamp:new Date().toLocaleString(),
+orderInfo:{
+fullName,grade,section,items:orderData.items,total:orderData.total
+}
+});
+localStorage.setItem('adminOrders',JSON.stringify(adminOrders));
+
+document.getElementById('submitBtn').classList.add('success');
+document.getElementById('submitBtn').innerText="Order Submitted!";
+document.getElementById('submitBtn').disabled=true;
+
+localStorage.removeItem('shopOrders');
+});
+</script>
+</body>
+</html>

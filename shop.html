@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Justine Shop</title>
+<style>
+body {background:#000;color:#fff;font-family:'Poppins',sans-serif;display:flex;flex-direction:column;align-items:center;padding:30px 10px;}
+h1{font-size:3em;font-weight:800;text-transform:uppercase;color:#ff0033;text-shadow:0 0 15px #ff0033,0 0 30px #ff0033;margin-bottom:40px;}
+.price-box{width:95%;max-width:700px;background:rgba(0,0,0,0.7);border:2px solid #ff0033;border-radius:20px;box-shadow:0 0 25px #ff0033,inset 0 0 15px #ff0033;padding:20px;text-align:center;margin-bottom:30px;}
+table{width:100%;border-collapse:collapse;margin-top:10px;}
+th,td{padding:15px;border-bottom:1px solid #ff0033;font-size:1.1em;}
+th{color:#ff0033;font-weight:700;text-shadow:0 0 10px #ff0033;}
+td{color:#fff;font-weight:500;}
+.order-btns button{margin:0 5px;padding:5px 15px;border:none;border-radius:8px;cursor:pointer;font-weight:600;background:#ff0033;color:#fff;box-shadow:0 0 10px #ff0033;transition:0.3s;}
+.order-btns button:hover{background:#fff;color:#ff0033;}
+.orders-container{width:95%;max-width:700px;background:rgba(0,0,0,0.7);border:2px solid #ff0033;border-radius:20px;box-shadow:0 0 25px #ff0033,inset 0 0 15px #ff0033;padding:20px;margin-top:20px;}
+.orders-container h2{margin-bottom:15px;font-size:1.5em;color:#ff0033;text-align:center;text-shadow:0 0 10px #ff0033;}
+.order-item{display:flex;justify-content:space-between;align-items:center;padding:10px;margin-bottom:10px;border-bottom:1px solid #ff0033;}
+.order-item:last-child{border-bottom:none;}
+.order-item span{font-size:1.1em;font-weight:500;}
+.order-item button{padding:5px 10px;border:none;background:#ff0033;color:#fff;border-radius:5px;cursor:pointer;font-size:0.9em;transition:0.3s;}
+.order-item button:hover{background:#fff;color:#ff0033;}
+.order-now{margin-top:20px;display:block;width:100%;padding:12px;font-size:1.2em;font-weight:700;text-align:center;color:#fff;background:#ff0033;border:none;border-radius:30px;cursor:pointer;box-shadow:0 0 15px #ff0033;transition:0.3s;}
+.order-now:hover{background:#fff;color:#ff0033;}
+.back-btn{margin-top:30px;padding:10px 25px;border:2px solid #ff0033;border-radius:30px;color:#fff;text-decoration:none;transition:0.3s;}
+.back-btn:hover{background:#ff0033;box-shadow:0 0 15px #ff0033;}
+.total-box{margin-top:15px;text-align:right;font-size:1.2em;font-weight:700;color:#ff0033;text-shadow:0 0 10px #ff0033;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+</style>
+</head>
+<body>
+
+<h1>Banana Chips</h1>
+
+<div class="price-box">
+<table>
+<tr><th></th><th>Small</th><th>Large</th><th>Order</th></tr>
+<tr>
+<td>1 pcs.</td><td>₱20</td><td>₱25</td>
+<td class="order-btns">
+<button onclick="addOrder('1 pcs. Small',20)">1</button>
+<button onclick="addOrder('1 pcs. Large',25)">2</button>
+</td>
+</tr>
+<tr>
+<td>3 pcs.</td><td>₱50</td><td>₱65</td>
+<td class="order-btns">
+<button onclick="addOrder('3 pcs. Small',50)">1</button>
+<button onclick="addOrder('3 pcs. Large',65)">2</button>
+</td>
+</tr>
+<tr>
+<td>5 pcs.</td><td>₱85</td><td>₱110</td>
+<td class="order-btns">
+<button onclick="addOrder('5 pcs. Small',85)">1</button>
+<button onclick="addOrder('5 pcs. Large',110)">2</button>
+</td>
+</tr>
+</table>
+</div>
+
+<div class="orders-container" id="orders">
+<h2>Your Orders</h2>
+<div id="order-list"></div>
+<div class="total-box">Total: ₱<span id="totalPrice">0</span></div>
+<button class="order-now" onclick="goToFillUp()">Order</button>
+</div>
+
+<a href="index.html" class="back-btn">Back to Portfolio</a>
+
+<script>
+let total = 0;
+let ordersArray = [];
+
+function addOrder(itemName, price) {
+total += price;
+ordersArray.push(`${itemName} - ₱${price}`);
+const orderList = document.getElementById("order-list");
+const div = document.createElement("div");
+div.classList.add("order-item");
+div.innerHTML = `<span>${itemName} - ₱${price}</span><button onclick="removeOrder(this, ${price}, '${itemName}')">Cancel</button>`;
+orderList.appendChild(div);
+document.getElementById("totalPrice").innerText = total;
+}
+
+function removeOrder(btn, price, itemName) {
+btn.parentElement.remove();
+total -= price;
+ordersArray = ordersArray.filter(item => item !== `${itemName} - ₱${price}`);
+document.getElementById("totalPrice").innerText = total;
+}
+
+function goToFillUp() {
+if(ordersArray.length === 0){alert("Please add an order first!"); return;}
+localStorage.setItem('shopOrders', JSON.stringify({items:ordersArray,total:total}));
+window.location.href="fillup.html";
+}
+</script>
+
+</body>
+</html>

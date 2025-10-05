@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Justine Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+    * {margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif;}
+    body {background: #000; color: #fff; min-height: 100vh; overflow-x: hidden; display: flex; flex-direction: column;}
+    header {width: 100%; padding: 20px 10%; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 100;}
+    header h1 {font-size: 1.5em; color: #fff; text-transform: uppercase; letter-spacing: 2px;}
+    header h1 span {color: #ff0033;}
+    nav {display: flex; gap: 25px;}
+    nav a {color: #fff; text-decoration: none; font-weight: 500; transition: 0.3s;}
+    nav a:hover {color: #ff0033;}
+    .menu-toggle {display: none; flex-direction: column; cursor: pointer; gap: 5px;}
+    .menu-toggle span {width: 25px; height: 3px; background: #fff; transition: 0.3s;}
+    @media(max-width: 900px) {
+      nav {display: none; flex-direction: column; position: absolute; top: 70px; right: 10%; background: rgba(0,0,0,0.9); padding: 20px; border-radius: 10px; box-shadow: 0 0 15px #ff0033;}
+      nav.active {display: flex;}
+      .menu-toggle {display: flex;}
+    }
+    .hero {flex: 1; width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 80px 10%; flex-wrap: wrap;}
+    .hero-text {max-width: 500px; animation: fadeIn 1.5s ease forwards;}
+    .hero-text h2 {color: #ff0033; font-size: 1.2em; letter-spacing: 2px;}
+    .hero-text h1 {font-size: 2.5em; margin: 10px 0; text-transform: uppercase;}
+    .hero-text p {color: #ccc; margin: 20px 0 30px; line-height: 1.6;}
+    .btns {display: flex; gap: 20px;}
+    .btns a {padding: 10px 25px; background: transparent; border: 2px solid #ff0033; border-radius: 30px; color: #fff; font-weight: 500; text-decoration: none; transition: 0.3s;}
+    .btns a:hover {background: #ff0033; box-shadow: 0 0 15px #ff0033;}
+    .circle {width: 280px; height: 280px; border-radius: 50%; position: relative; overflow: hidden; box-shadow: 0 0 40px #ff0033, inset 0 0 20px #ff0033; animation: float 6s ease-in-out infinite; display: flex; justify-content: center; align-items: center;}
+    .circle .icon-person {font-size: 6em; color: #fff; position: relative; z-index: 1;}
+    .circle .wave {position: absolute; font-size: 3em; color: #fff; right: 70px; top: 80px; animation: waveAnim 1.5s infinite; z-index: 2;}
+    .circle::before {content: ''; position: absolute; top: -60px; left: -60px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(255,0,80,0.3) 0%, transparent 70%); animation: rotate 8s linear infinite; z-index: 0;}
+    @keyframes rotate {0% {transform: rotate(0deg);} 100% {transform: rotate(360deg);}}
+    @keyframes float {0%, 100% {transform: translateY(0);} 50% {transform: translateY(-20px);}}
+    @keyframes fadeIn {from {opacity: 0; transform: translateY(30px);} to {opacity: 1; transform: translateY(0);}}
+    @keyframes waveAnim {0% { transform: rotate(0deg); } 20% { transform: rotate(20deg); } 40% { transform: rotate(-15deg); } 60% { transform: rotate(15deg); } 80% { transform: rotate(-10deg); } 100% { transform: rotate(0deg); }}
+    .socials {display: flex; justify-content: center; gap: 30px; padding: 30px 0;}
+    .socials a {width: 70px; height: 70px; display: flex; justify-content: center; align-items: center; border-radius: 15px; font-size: 2em; color: #fff; background: rgba(0,0,0,0.7); box-shadow: 0 0 15px #ff0033; transition: 0.4s; text-decoration: none;}
+    .socials a:hover {color: #ff0033; background: #111; box-shadow: 0 0 25px #ff0033, 0 0 50px #ff0033; transform: scale(1.1);}
+    footer {text-align: center; padding: 20px; font-size: 0.9em; color: #666;}
+    @media(max-width: 900px) { .hero {flex-direction: column-reverse; text-align: center;} .circle {margin-bottom: 40px;} }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><span>Justine</span> Portfolio</h1>
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="nav-menu">
+      <a href="#">Home</a>
+      <a href="#">Projects</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-text">
+      <h2></h2>
+      <h1>Frontend Dreamer & Future Creator</h1>
+      <p>
+        I’m Justine G.Garlet — a passionate student with big dreams of success.  
+        I believe in hard work, creativity, and persistence. My journey began  
+        when I decided to explore the world of business and technology to  
+        build a brighter, successful future.
+      </p>
+      <div class="btns">
+        <a href="shop.html">View Justine Business</a>
+        <a href="tel:09939619937">Contact Me</a>
+      </div>
+    </div>
+
+    <div class="circle">
+      <i class="fas fa-user icon-person"></i>
+      <div class="wave"></div>
+    </div>
+  </section>
+
+  <div class="socials">
+    <a href="https://www.facebook.com/share/1CqfvUyWyA/" target="_blank"><i class="fab fa-facebook"></i></a>
+    <a href="https://www.instagram.com/jstine4819?igsh=MXRnY2ltejI1MGgwMg==" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.tiktok.com/@king.crazy166?_t=ZS-90GfnmbQ7dv&_r=1" target="_blank"><i class="fab fa-tiktok"></i></a>
+  </div>
+
+  <footer>© 2025 Justine Portfolio. All rights reserved.</footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("nav-menu").classList.toggle("active");
+    }
+  </script>
+</body>
+</html>
